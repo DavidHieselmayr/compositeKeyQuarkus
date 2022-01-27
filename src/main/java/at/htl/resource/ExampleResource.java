@@ -1,5 +1,6 @@
 package at.htl.resource;
 
+import at.htl.model.Department;
 import at.htl.model.Project;
 import at.htl.model.ProjektIdEmbeddable;
 
@@ -28,7 +29,8 @@ public class ExampleResource {
     @POST
     @Transactional
     public void save() {
-        Project p = new Project(new ProjektIdEmbeddable(1,1), "JPA");
+        Department dept = em.find(Department.class, 1);
+        Project p = new Project(new ProjektIdEmbeddable(1, dept), "JPA");
         em.persist(p);
     }
 }

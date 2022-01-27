@@ -1,21 +1,23 @@
 package at.htl.model;
 
 import javax.persistence.Embeddable;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
 public class ProjektIdEmbeddable implements Serializable {
     private int departmentId;
-    private int projectNo;
+    @ManyToOne
+    private Department projectNo;
 
-    public ProjektIdEmbeddable(int departmentId, int projectNo) {
-        this.departmentId = departmentId;
-        this.projectNo = projectNo;
-    }
 
     public ProjektIdEmbeddable(){
 
+    }
+    public ProjektIdEmbeddable(int departmentId, Department projectNo) {
+        this.departmentId = departmentId;
+        this.projectNo = projectNo;
     }
 
     public int getDepartmentId() {
@@ -26,11 +28,11 @@ public class ProjektIdEmbeddable implements Serializable {
         this.departmentId = departmentId;
     }
 
-    public int getProjectNo() {
+    public Department getProjectNo() {
         return projectNo;
     }
 
-    public void setProjectNo(int projectNo) {
+    public void setProjectNo(Department projectNo) {
         this.projectNo = projectNo;
     }
 
@@ -39,7 +41,7 @@ public class ProjektIdEmbeddable implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProjektIdEmbeddable that = (ProjektIdEmbeddable) o;
-        return departmentId == that.departmentId && projectNo == that.projectNo;
+        return departmentId == that.departmentId && Objects.equals(projectNo, that.projectNo);
     }
 
     @Override
