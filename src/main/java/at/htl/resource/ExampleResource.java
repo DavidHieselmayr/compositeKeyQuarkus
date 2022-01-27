@@ -6,12 +6,11 @@ import at.htl.model.ProjektIdEmbeddable;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @Path("/hello")
 public class ExampleResource {
@@ -32,5 +31,15 @@ public class ExampleResource {
         Department dept = em.find(Department.class, 1);
         Project p = new Project(new ProjektIdEmbeddable(1, dept), "JPA");
         em.persist(p);
+    }
+
+    @GET
+    @Path("proj_of_dept/{deptid}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findProjectsById(@PathParam("deptid") Integer deptid) {
+        TypedQuery<Project> query = em.createQuery("select project from Project project where project.id.projectNo.deptId = :deptid", Project.class);
+        query.setParameter("deptid", deptid);
+        return Response.ok(query.getResultList()).build();
+
     }
 }
