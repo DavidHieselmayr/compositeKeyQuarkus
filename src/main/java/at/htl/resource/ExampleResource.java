@@ -1,6 +1,7 @@
 package at.htl.resource;
 
 import at.htl.model.Project;
+import at.htl.model.ProjektIdEmbeddable;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -27,7 +28,7 @@ public class ExampleResource {
     @POST
     @Transactional
     public void save() {
-        Project p = new Project(1, 1, "JPA");
+        Project p = new Project(new ProjektIdEmbeddable(1,1), "JPA");
         em.persist(p);
     }
 }

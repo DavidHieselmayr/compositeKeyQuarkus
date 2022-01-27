@@ -1,17 +1,16 @@
 package at.htl.model;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 
 @Entity
-@IdClass(ProjectId.class)
 public class Project {
 
-    @Id
-    int departmentId;
-    @Id
-    int projectNo;
+    @EmbeddedId
+    private ProjektIdEmbeddable id;
+
 
     String bezeichnung;
 
@@ -19,27 +18,21 @@ public class Project {
 
     }
 
-
-    public Project(int departmentId, int projectNo, String bezeichnung) {
-        this.departmentId = departmentId;
-        this.projectNo = projectNo;
+    public Project(String bezeichnung) {
         this.bezeichnung = bezeichnung;
     }
 
-    public int getDepartmentId() {
-        return departmentId;
+    public Project(ProjektIdEmbeddable id, String bezeichnung) {
+        this.id = id;
+        this.bezeichnung = bezeichnung;
     }
 
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
+    public ProjektIdEmbeddable getId() {
+        return id;
     }
 
-    public int getProjectNo() {
-        return projectNo;
-    }
-
-    public void setProjectNo(int projectNo) {
-        this.projectNo = projectNo;
+    public void setId(ProjektIdEmbeddable id) {
+        this.id = id;
     }
 
     public String getBezeichnung() {
